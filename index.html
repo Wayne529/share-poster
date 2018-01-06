@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>分享海报</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/share-popup.css">
+    <script src="./js/mobile-util.js"></script>
+</head>
+<body>
+    <div class="share-btn js-share">点击分享</div>
+    <!-- 高层级弹框背景 -->
+    <div class="higher_shadow_bg"></div>
+    <div class="higher_opacity_shadow_bg"></div>
+    <!-- 高层级弹框背景 END -->
+
+    <!-- 分享指引弹框 -->
+    <div class="js-share-label" data-type="module"></div>
+    <!-- 分享指引弹框END -->
+
+    <!-- 底部分享弹框 -->
+    <div class="flex-bottom" data-type="flex">
+        <p class="title">分享后最高可赚佣金
+            <span class="mark-red">￥20.00</span>
+        </p>
+        <p class="desc">不同佣金比例可能不同，以最终订单结算佣金为准</p>
+        <ul class="share-operate-wrap">
+            <li class="item">
+                <div class="icon-box" id="wechat">
+                    <img class="wechat-icon" src="./images/share/wechat-icon.png" alt="">
+                </div>
+                <p class="share-way-txt">微信好友</p>
+            </li>
+            <li class="item">
+                <div class="icon-box" id="friends">
+<img class="friend-icon" src="./images/share/friend-icon.png" alt="">
+                </div>
+                <p class="share-way-txt">微信朋友圈</p>
+            </li>
+            <li class="item">
+                <div class="icon-box" id="qrcode">
+<img class="qrcode-icon" src="./images/share/qrcode.png" alt="">
+                </div>
+                <p class="share-way-txt">二维码</p>
+            </li>
+            <li class="item">
+                <div class="icon-box" id="poster-qrcode">
+                    <img class="poster-qrcode-icon" src="./images/share/poster-qrcode.png" alt="">
+                </div>
+                <p class="share-way-txt">海报二维码</p>
+            </li>
+        </ul>
+
+        <div class="cancel-btn">取消</div>
+    </div>
+    <!-- 底部分享弹框END -->
+
+    <!-- 分享二维码弹框 -->
+    <div class="share_qrcode_module" data-type="module">
+        <div class="wrap">
+            <span class="icon icon-remove"></span>
+            <div class="qrcode-wrap" id="qrcodeWrap">
+                <!-- <img class="qrcode" src="../../../../../Home/app/app-juooo4.2/images/share/wanyou_qrcode2.png" alt=""> -->
+            </div>
+        </div>
+        <p class="tips">
+            <img class="long_spress" src="./images/share/long-press-white.png" alt=""> 长按保存图片至相册
+        </p>
+    </div>
+    <!-- 分享二维码弹框END -->
+
+    <!-- 海报二维码弹框 -->
+    <div class="poster_qrcode_module" data-type="module">
+        <span class="icon icon-remove"></span>
+        <div class="wrap">
+            <canvas class="poster-wrap" id="poster" style="display:none;"></canvas>
+            <div class="poster-qrcode" id="posterQrcodeWrap"></div>
+            <canvas id="poster" style="display:none;"></canvas>
+            <canvas id="blurBg" style="display:none;"></canvas>
+        </div>
+
+        <p class="tips">
+<img class="long_spress" src="./images/share/long-press-white.png" alt=""> 长按保存图片至相册
+        </p>
+    </div>
+    <!-- 海报二维码弹框END -->
+    <script src="./js/jquery-2.1.4.min.js"></script>
+    <script src="./js/qrcode.min.js"></script>
+    <script src="./js/stackblur.js"></script>
+    <script>
+        $(function(){
+                //点击遮罩层
+                $('.higher_shadow_bg').on('click', function() {
+                    var _types = $('div[data-type="module"]');
+                    $('.higher_shadow_bg').fadeOut();
+                    for (var i = 0; i < _types.length; i++) {
+                        $(_types[i]).fadeOut();
+                    }
+                    $('div[data-type="flex"]').removeClass('active');
+                });
+                //展开分享下拉弹框
+                $('.js-share').on('click', function() {
+                    $('.higher_shadow_bg').fadeIn();
+                    $('.flex-bottom').addClass('active');
+                });
+                //收起分享下拉弹框
+                $('.flex-bottom .cancel-btn').on('click', function() {
+                    $('.higher_shadow_bg').fadeOut();
+                    $('.flex-bottom').removeClass('active');
+                });
+
+                //点击分享朋友圈和微信好友
+                $('#wechat,#friends').on('click', function() {
+                    $('.flex-bottom').removeClass('active');
+                    $('.js-share-label').fadeIn();
+                });
+                //点击二维码分享
+                $('#qrcode').on('click', function() {
+                    $('.flex-bottom').removeClass('active');
+                    $('.share_qrcode_module').fadeIn();
+                    generateQrcode('https://m.juooo.com/','qrcodeWrap');
+                });
+                //关闭二维码分享
+                $('.share_qrcode_module .wrap .icon-remove').on('click', function() {
+                    $('.higher_shadow_bg').fadeOut();
+                    $('.share_qrcode_module').fadeOut();
+                    
+                });
+
+                //展开海报二维码
+                $('.share-operate-wrap #poster-qrcode').on('click', function() {
+                    $('.flex-bottom').removeClass('active');
+                    $('.poster_qrcode_module').fadeIn();
+                    generatePoster({
+                        posterImgUrl:'http://image.juooo.com/group1/M00/00/B5/rAoKmVoCbWWAYiDmAADZVO-9QdM948.jpg',
+                        showTitle:'法语原版经典音乐剧《罗密欧与朱丽叶》',
+                        showCity:'深圳',
+                        showVenue:'南山文体中心剧院大剧院',
+                        showTime:'2018.01.06 20:00',
+                        qrcodeUrl:'https://m.juooo.com/ticket/81207'
+                    });
+                });
+                //关闭海报二维码
+                $('.poster_qrcode_module .icon-remove').on('click', function() {
+                    $('.higher_shadow_bg').fadeOut();
+                    $('.poster_qrcode_module').fadeOut();
+                });
+
+            /**
+             * mark:生成二维码
+             * author: LiuWei
+             * time: 2018/01/02
+             * @qrcodeUrl [二维码地址]
+             */
+            function generateQrcode(qrcodeUrl, elementId) {
+                document.getElementById(elementId).innerHTML = '';
+                var qrcode = new QRCode(document.getElementById(elementId), {
+                    text: qrcodeUrl,
+                    width: 300,
+                    height: 300,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+                return qrcode;
+            }
+
+
+
+            /**
+             * mark:生成海报
+             * author: LiuWei
+             * time: 2018/01/02
+             * @qrcodeUrl [海报]
+             */
+            function generatePoster(param) {
+                //配置项
+                var posterImgUrl = param.posterImgUrl;//海报图片
+                var showTitle = param.showTitle;
+                var showCity = param.showCity;
+                var showVenue = param.showVenue;
+                var showTime = param.showTime;
+                var qrcodeUrl = param.qrcodeUrl;
+
+                var fontSize = parseFloat(($('html').css('font-size').split('px'))[0]);//获取到html的字体大小
+                var wrapW = $('.poster_qrcode_module .wrap').width();
+                var wrapH = $('.poster_qrcode_module .wrap').height();
+                var posterCanvas = document.getElementById('poster');
+                posterCanvas.setAttribute('width', wrapW + 'px');
+                posterCanvas.setAttribute('height', wrapH + 'px');
+                var ctx = posterCanvas.getContext('2d');
+                //背景canvas
+                var blurCanvas = document.getElementById('blurBg');
+                var bgCtx = blurCanvas.getContext('2d');
+                blurCanvas.setAttribute('width', 13.14 * fontSize + 'px');
+                blurCanvas.setAttribute('height', 10.24 * fontSize + 'px');
+
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, wrapW, wrapH);
+                var posterImg = new Image();
+                posterImg.crossOrigin = 'anonymous';
+                posterImg.src = posterImgUrl;
+                posterImg.onload = function () {
+                    bgCtx.drawImage(posterImg, 0, 0, 13.14 * fontSize, 10.24 * fontSize);
+                    stackBlurCanvasRGBA('blurBg', 0, 0, wrapW, wrapH, 50);
+                    var bgImg = new Image();
+                    bgImg.src = blurCanvas.toDataURL('image/png');
+                    bgImg.onload = function () {
+                        ctx.drawImage(bgImg, 0, 0, 13.14 * fontSize, 10.24 * fontSize);//绘制背景毛玻璃
+                        var mask = ctx.createLinearGradient(0, 0, 0, 10 * fontSize);
+                        mask.addColorStop(0.7, 'rgba(255, 255, 255,.2)');
+                        mask.addColorStop(1, 'rgb(255, 255, 255)');
+                        ctx.fillStyle = mask;
+                        ctx.fillRect(0, 8 * fontSize, 13.14 * fontSize, 2.3 * fontSize);
+                        ctx.drawImage(posterImg, 3.54 * fontSize, 0.64 * fontSize, 5.9 * fontSize, 7.9 * fontSize);//绘制海报
+                        //绘制标题
+                        ctx.font = '' + 0.6 * fontSize + 'px 黑体';
+                        ctx.fillStyle = '#000000';
+                        ctx.textAlign = 'center';
+                        var titleLimit = 20;
+                        if (showTitle.length < titleLimit) {
+                            ctx.fillText(showTitle, 6.6 * fontSize, 10 * fontSize);//演出名称
+                        } else if (showTitle.length < titleLimit * 2) {
+                            ctx.fillText(showTitle.substring(0, titleLimit), 6.6 * fontSize, 10 * fontSize);//演出名称
+                            ctx.fillText(showTitle.substring(titleLimit), 6.6 * fontSize, 10.7 * fontSize);//演出名称
+                        } else {
+                            ctx.fillText(showTitle.substring(0, titleLimit), 6.6 * fontSize, 10 * fontSize);//演出名称
+                            ctx.fillText(showTitle.substring(titleLimit, titleLimit * 2) + '...', 6.6 * fontSize, 10.7 * fontSize);//演出名称
+                        }
+
+                        //绘制城市场馆
+                        ctx.font = '' + 0.512 * fontSize + 'px 黑体';
+                        ctx.fillStyle = '#999999';
+                        ctx.fillText('' + showCity + '丨' + showVenue + '', 6.6 * fontSize, 11.6 * fontSize);//演出场馆
+                        ctx.fillText(showTime, 6.6 * fontSize, 12.37 * fontSize);//演出时间
+                        var posterQrcode = generateQrcode(qrcodeUrl, 'posterQrcodeWrap');
+                        var posterQrcodeImg = posterQrcode._el.getElementsByTagName('img')[0];
+
+                        posterQrcodeImg.onload = function () {
+                            console.log(posterQrcodeImg);
+                            ctx.drawImage(posterQrcodeImg, 4 * fontSize, 13.12 * fontSize, 5 * fontSize, 5 * fontSize);
+                            var poster = new Image();
+                            poster.src = posterCanvas.toDataURL('image/png');
+                            $('.poster_qrcode_module .wrap').children('img').remove();
+                            $('.poster_qrcode_module .wrap').append(poster);
+                        }
+                    }
+                }
+
+            }
+
+            
+
+        })
+    </script>
+</body>
+</html>

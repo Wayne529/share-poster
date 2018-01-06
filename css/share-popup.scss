@@ -1,0 +1,414 @@
+@charset "UTF-8";
+$ppr: 750px/16/1rem; // pixel per rem
+//高层级背景shadow
+.higher_shadow_bg {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 588;
+    display: none;
+    &.active {
+        opacity: 0.6;
+        transition: opacity .3s ease;
+        display: block;
+    }
+}
+
+.higher_opacity_shadow_bg {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 588;
+    display: none;
+    &.active {
+        opacity: 0.8;
+        transition: opacity .3s ease;
+        display: block;
+    }
+}
+
+//分享家各种分享弹框
+//分享指引弹框
+.js-share-label {
+    width: 507px/$ppr;
+    height: 216px/$ppr;
+    position: fixed;
+    right: 43px/$ppr;
+    top: 25px/$ppr;
+    background: url("../images/share/share-label.png") center center no-repeat;
+    background-size: 100%;
+    z-index: 589;
+    display: none;
+}
+
+//底部分享弹框
+.flex-bottom {
+    width: 100%;
+    height: 530px/$ppr;
+    background: #f5f5f5;
+    position: fixed;
+    bottom: -530px/$ppr;
+    left: 0;
+    z-index: 589;
+    padding-top: 40px/$ppr;
+    -webkit-transition: bottom .5s ease;
+    -moz-transition: bottom .5s ease;
+    transition: bottom .5s ease;
+    &.active {
+        bottom: 0;
+    }
+    .title {
+        font-size: 30px/$ppr;
+        color: #333;
+        line-height: 68px/$ppr;
+        text-align: center;
+        font-weight: bold;
+        .mark-red {
+            color: #ff7919;
+            font-weight: normal;
+        }
+    }
+    .desc {
+        font-size: 24px/$ppr;
+        color: #999;
+        text-align: center;
+        line-height: 43px/$ppr;
+    }
+    .share-operate-wrap {
+        padding: 40px/$ppr 50px/$ppr 0px;
+        overflow: hidden;
+        .item {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            float: left;
+            margin-right: 50px/$ppr;
+            &:last-child {
+                margin-right: 0;
+            }
+            .icon-box {
+                width: 120px/$ppr;
+                height: 120px/$ppr;
+                background-color: #fff;
+                border-radius: 50%;
+                overflow: hidden;
+                display: -webkit-flex;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .wechat-icon {
+                    width: 52px/$ppr;
+                }
+                .friend-icon {
+                    width: 46px/$ppr;
+                }
+                .qrcode-icon {
+                    width: 42px/$ppr;
+                }
+                .poster-qrcode-icon {
+                    width: 41px/$ppr;
+                }
+            }
+            .share-way-txt {
+                font-size: 24px/$ppr;
+                color: #333;
+                line-height: 24px/$ppr;
+                margin-top: 24px/$ppr;
+            }
+        }
+    }
+    .cancel-btn {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100px/$ppr;
+        line-height: 100px/$ppr;
+        text-align: center;
+        background-color: #fff;
+        font-size: 32px/$ppr;
+        color: #212121;
+    }
+}
+
+// 佣金明细弹框
+.details_module {
+    width: 600px/$ppr;
+    background: #fff;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    z-index: 589;
+    display: none;
+    .title {
+        height: 90px/$ppr;
+        background: #fafafa;
+        line-height: 90px/$ppr;
+        text-align: center;
+        position: relative;
+        font-size: 34px/$ppr;
+        color: #333;
+        .icon-remove {
+            width: 84px/$ppr;
+            height: 90px/$ppr;
+            line-height: 90px/$ppr;
+            font-size: 26px/$ppr;
+            position: absolute;
+            top: 50%;
+            -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+            right: 0;
+            text-align: center;
+        }
+    }
+    .table_wrap {
+        padding: 34px/$ppr 35px/$ppr 40px/$ppr; // max-height: 500px/$ppr;
+        overflow-y: auto;
+        .table_info {
+            display: table;
+            width: 100%;
+            thead tr th {
+                text-align: left;
+                font-size: 28px/$ppr;
+                color: #646464;
+                line-height: 28px/$ppr;
+                padding-bottom: 38px/$ppr;
+            }
+        }
+        tbody tr {
+            td {
+                font-size: 28px/$ppr;
+                line-height: 28px/$ppr;
+                color: #333;
+                padding-bottom: 32px/$ppr;
+            }
+            &:last-child td {
+                padding-bottom: 0px;
+            }
+        }
+    }
+    .total {
+        height: 92px/$ppr;
+        background: #fafafa;
+        text-align: center;
+        line-height: 92px/$ppr;
+        font-size: 24px/$ppr;
+        color: #ff5d42;
+        border-top: 1px solid #ebebeb;
+        .money_numb {
+            font-size: 34px/$ppr;
+        }
+    }
+}
+
+//分享二维码弹框
+.share_qrcode_module {
+    position: fixed;
+    left: 50%;
+    top: 248px/$ppr;
+    -webkit-transform: translate(-50%);
+    transform: translate(-50%);
+    z-index: 599;
+    display: none;
+    .wrap {
+        position: relative;
+        width: 518px/$ppr;
+        height: 524px/$ppr;
+        background: #fff;
+        border-radius: 10px/$ppr;
+        border: 1px solid #9c9c9c;
+        .qrcode-wrap {
+            padding: 30px/$ppr;
+            >img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .qrcode {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            width: 404px/$ppr;
+        }
+        .icon-remove {
+            font-size: 14px/$ppr;
+            color: #333;
+            position: absolute;
+            top: -14px/$ppr;
+            right: -14px/$ppr;
+            display: inline-block;
+            width: 50px/$ppr;
+            height: 50px/$ppr;
+            border-radius: 50%;
+            background: #fff;
+            text-align: center;
+            line-height: 50px/$ppr;
+        }
+    }
+    .tips {
+        font-size: 28px/$ppr;
+        color: #fff;
+        text-align: center;
+        line-height: 28px/$ppr;
+        margin-top: 50px/$ppr;
+        .long_spress {
+            width: 25px/$ppr;
+            margin-right: 16px/$ppr;
+            margin-bottom: -2px/$ppr;
+        }
+    }
+}
+
+//海报二维码弹框
+.poster_qrcode_module {
+    position: fixed;
+    left: 50%;
+    top: 52px/$ppr;
+    -webkit-transform: translate(-50%);
+    transform: translate(-50%);
+    z-index: 599;
+    display: none;
+    .icon-remove {
+        position: absolute;
+        right: -15px/$ppr;
+        top: -15px/$ppr;
+        display: inline-block;
+        width: 50px/$ppr;
+        height: 50px/$ppr;
+        border-radius: 50%;
+        background: #fff;
+        font-size: 14px/$ppr;
+        color: #333;
+        text-align: center;
+        line-height: 50px/$ppr;
+        z-index: 4;
+    }
+    .wrap {
+        width: 632px/$ppr;
+        height: 922px/$ppr;
+        border-radius: 10px/$ppr;
+        position: relative;
+        background: #fffffe;
+        padding: 10px/$ppr 10px/$ppr 0;
+        .pic_con {
+            height: 492px/$ppr;
+            overflow: hidden;
+            position: relative;
+            border-top-left-radius: 10px/$ppr;
+            border-top-right-radius: 10px/$ppr;
+            .blur_img {
+                width: 680px/$ppr;
+                height: 492px/$ppr; // background-image: url("../images/share/richad.png");
+                background-position: center top;
+                background-repeat: no-repeat;
+                background-size: 750px/$ppr;
+                -webkit-filter: brightness(30%);
+                -moz-filter: brightness(30%);
+                -ms-filter: brightness(30%);
+                filter: brightness(30%);
+                -webkit-filter: blur(20px/$ppr);
+                filter: blur(20px/$ppr);
+                position: absolute;
+                top: -20px/$ppr;
+                left: -34px/$ppr;
+            }
+            .poster_pic {
+                position: absolute;
+                top: 30px/$ppr;
+                width: 280px/$ppr;
+                height: 372px/$ppr;
+                border-radius: 10px/$ppr;
+                left: 50%;
+                -webkit-transform: translateX(-50%);
+                transform: translateX(-50%);
+                background: #000;
+                overflow: hidden;
+                -webkit-box-shadow: 0px 10px/$ppr 5px/$ppr 0px rgba(0, 0, 0, 0.2);
+                box-shadow: 0px 10px/$ppr 5px/$ppr 0px rgba(0, 0, 0, 0.2);
+                z-index: 9;
+                .pic {
+                    width: 100%;
+                }
+            }
+        }
+        .linear_bg {
+            width: 100%;
+            height: 170px/$ppr;
+            position: absolute;
+            left: 0;
+            top: 334px/$ppr;
+            background: -webkit-linear-gradient(bottom, rgba(255, 255, 255, 1), rgba(81, 62, 53, 0));
+            background: linear-gradient(bottom, rgba(255, 255, 255, 1), rgba(81, 62, 53, 0));
+            z-index: 4;
+        }
+        .poster_title {
+            position: relative;
+            z-index: 10;
+            font-size: 28px/$ppr;
+            line-height: 38px/$ppr;
+            color: #000;
+            width: 490px/$ppr;
+            text-align: center;
+            margin: -54px/$ppr auto 0px;
+            font-weight: bold;
+        }
+        .posi,
+        .date {
+            font-size: 24px/$ppr;
+            line-height: 24px/$ppr;
+            color: #999;
+            text-align: center;
+            margin-top: 20px/$ppr;
+        }
+        .date {
+            margin-top: 15px/$ppr;
+        }
+        .poster-qrcode-wrap {
+            display: block;
+            width: 243px/$ppr;
+            margin: 27px/$ppr auto 0;
+            >img {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .poster-qrcode {
+            display: none;
+        }
+    }
+    .tips {
+        font-size: 28px/$ppr;
+        color: #fff;
+        text-align: center;
+        line-height: 28px/$ppr;
+        margin-top: 50px/$ppr;
+        .long_spress {
+            width: 25px/$ppr;
+            margin-right: 16px/$ppr;
+            margin-bottom: -2px/$ppr;
+        }
+    }
+}
+
+.share-btn {
+    width: 300px/$ppr;
+    height: 60px/$ppr;
+    margin: 0 auto;
+    line-height: 60px/$ppr;
+    background: #ff7919;
+    color: #fff;
+    margin: 200px/$ppr auto;
+    text-align: center;
+    border-radius: 8px/$ppr;
+}
